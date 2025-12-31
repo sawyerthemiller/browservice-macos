@@ -38,3 +38,10 @@ debug
 release
 gen
 GPUCache
+.DS_Store
+
+# Mac Build Artifacts
+Chromium Embedded Framework.framework/
+libcef_dll_wrapper/
+cef/
+*.dmg
