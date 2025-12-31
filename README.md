@@ -1,6 +1,6 @@
 # Browservice for macOS (Apple Silicon)
 
-Instructions for building Browservice on macOS (M1/M2/M3).
+Instructions for building Browservice on macOS (M Series Chips)
 
 ## Prerequisites
 - **macOS** on Apple Silicon (ARM64) is required.
@@ -44,7 +44,7 @@ Pack the executable and helper processes into a macOS App Bundle. Ensure you are
 This will create `browservice.app` in your current directory.
 
 ### 5. Finishing Up
-You can now move the created 'browservice.app' file into your apps folder and delete the build folder if you'd like.
+You can now move the created `browservice.app` file into your apps folder and delete the cloned folder if you'd like.
 
 ## Running Browservice
 You can launch the application directly from the build folder:
