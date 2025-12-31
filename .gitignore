@@ -43,5 +43,6 @@ GPUCache
 # Mac Build Artifacts
 Chromium Embedded Framework.framework/
 libcef_dll_wrapper/
+.DS_Store
 cef/
 *.dmg
