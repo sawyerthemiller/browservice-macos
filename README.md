@@ -43,7 +43,7 @@ Pack the executable and helper processes into a macOS App Bundle. Ensure you are
 ```
 This will create `browservice.app` in your current directory.
 
-### 4. Create the App Bundle
+### 5. Finishing Up
 You can now move the created 'browservice.app' file into your apps folder and delete the build folder if you'd like.
 
 ## Running Browservice
