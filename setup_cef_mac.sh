@@ -2,7 +2,7 @@
 
 set -e
 
-# Note - Using a slightly older stable version
+# Using a slightly older stable version
 CEF_VERSION="140.1.15+gfaef09b+chromium-140.0.7339.214"
 
 CEF_PLATFORM="macosarm64"
