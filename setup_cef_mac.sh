@@ -4,9 +4,7 @@ set -e
 
 # Default CEF version (can be overridden)
 CEF_VERSION="130.1.9+g72f5678+chromium-130.0.6723.70"
-# Note: Using a slightly older stable version if 140 is bleeding edge, but search said 140 is current. 
-# Let's use the one found in search or a safe known one. 
-# Search result: "version 140.1.15+gfaef09b+chromium-140.0.7339.214"
+# Note - Using a slightly older stable version
 CEF_VERSION="140.1.15+gfaef09b+chromium-140.0.7339.214"
 
 CEF_PLATFORM="macosarm64"
