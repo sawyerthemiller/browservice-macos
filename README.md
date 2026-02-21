@@ -1,4 +1,4 @@
-# Browservice for macOS (Apple Silicon)
+## Browservice for macOS (Apple Silicon)
 
 Instructions for building Browservice on macOS (M Series Chips)
 
