@@ -1,7 +1,7 @@
-// sha3.h
-// 19-Nov-11  Markku-Juhani O. Saarinen <mjos@iki.fi>
+// sha3h
+// 19-Nov-11  Markku-Juhani O Saarinen <mjos@ikifi>
 
-// Modified for use with browservice (omit unused stuff, follow strict aliasing rules)
+// Modified for use with browservice (omit unused stuff follow strict aliasing rules)
 
 #ifndef SHA3_H
 #define SHA3_H
@@ -20,10 +20,10 @@
 // state context
 typedef struct {
     uint64_t st[25];
-    int pt, rsiz, mdlen;                    // these don't overflow
+    int pt, rsiz, mdlen;                    // these dont overflow
 } sha3_ctx_t;
 
-// Compression function.
+// Compression function
 void sha3_keccakf(uint64_t st[25]);
 
 // OpenSSL - like interfece
@@ -31,7 +31,7 @@ int sha3_init(sha3_ctx_t *c, int mdlen);    // mdlen = hash output in bytes
 int sha3_update(sha3_ctx_t *c, const unsigned char *data, size_t len);
 int sha3_final(unsigned char *md, sha3_ctx_t *c);    // digest goes to md
 
-// compute a sha3 hash (md) of given byte length from "in"
+// compute sha3 hash (md) of given byte length from in
 void *sha3(const unsigned char *in, size_t inlen, unsigned char *md, int mdlen);
 
 #endif

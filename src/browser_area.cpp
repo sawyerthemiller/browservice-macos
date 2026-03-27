@@ -111,7 +111,7 @@ public:
         browserArea_ = browserArea;
     }
 
-    // CefRenderHandler:
+    // CefRenderHandler - 
     virtual void GetViewRect(CefRefPtr<CefBrowser>, CefRect& rect) override {
         REQUIRE_UI_THREAD();
 

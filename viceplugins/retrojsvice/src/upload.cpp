@@ -86,7 +86,7 @@ public:
         hash_ = move(hash);
     }
 
-    // The shared_ptr must expire when storage_->mutex_ is locked.
+    // shared_ptr must expire when storage_->mutex_ is locked
     ~Impl() {
         REQUIRE(storage_->files_.erase(hash_));
         unlinkFile(path_);

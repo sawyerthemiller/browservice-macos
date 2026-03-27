@@ -11,7 +11,7 @@ public:
     virtual void onTextFieldTextChanged() {}
 
     // Some event forwarding functions useful for QualitySelector (if we need
-    // more of these, we should consider implementing event bubbling)
+    // more of these we should consider implementing event bubbling)
     virtual void onTextFieldUDKeyDown(bool down) {}
     virtual void onTextFieldEscKeyDown() {}
     virtual void onTextFieldUDKeyUp(bool down) {}
@@ -54,7 +54,7 @@ private:
     void pasteFromClipboard_();
     void copyToClipboard_();
 
-    // Widget:
+    // Widget - 
     virtual void widgetViewportUpdated_() override;
     virtual void widgetRender_() override;
     virtual void widgetMouseDownEvent_(int x, int y, int button) override;

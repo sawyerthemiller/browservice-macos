@@ -44,7 +44,7 @@ public:
         downloadManager_ = downloadManager;
     }
 
-    // CefDownloadHandler:
+    // CefDownloadHandler - 
     virtual bool OnBeforeDownload(
         CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefDownloadItem> downloadItem,

@@ -10,7 +10,7 @@ public:
     virtual variant<uint64_t, string> onWindowManagerCreateWindowWithURIRequest(string uri) = 0;
     virtual void onWindowManagerCloseWindow(uint64_t window) = 0;
 
-    // See ImageCompressorEventHandler::onImageCompressorFetchImage
+    // See ImageCompressorEventHandler -  - onImageCompressorFetchImage
     virtual void onWindowManagerFetchImage(
         uint64_t window,
         function<void(const uint8_t*, size_t, size_t, size_t)> func
@@ -55,7 +55,7 @@ class FileDownload;
 class HTTPRequest;
 class SecretGenerator;
 
-// Must be closed with close() prior to destruction.
+// Must be closed with close() prior to destruction
 class WindowManager :
     public WindowEventHandler,
     public enable_shared_from_this<WindowManager>
@@ -72,9 +72,9 @@ public:
     ~WindowManager();
 
     // Immediately closes all windows and prevents new windows from being
-    // created; new HTTP requests are dropped immediately. May call
-    // WindowManagerEventHandler::onCloseWindow directly and drops shared
-    // pointer to event handler. Will not call any other event handlers.
+    // created - new HTTP requests are dropped immediately May call
+    // WindowManagerEventHandler -  - onCloseWindow directly and drops shared
+    // pointer to event handler Will not call any other event handlers
     void close(MCE);
 
     void handleHTTPRequest(MCE, shared_ptr<HTTPRequest> request);
@@ -102,7 +102,7 @@ public:
     bool startFileUpload(uint64_t window);
     void cancelFileUpload(uint64_t window);
 
-    // WindowEventHandler:
+    // WindowEventHandler - 
     virtual void onWindowClose(uint64_t window) override;
     virtual void onWindowFetchImage(
         uint64_t window,

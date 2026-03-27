@@ -9,8 +9,8 @@ namespace retrojsvice {
 
 class SecretGenerator;
 
-// The implementation of the vice plugin context, exposed through the C API in
-// vice_plugin_api.cpp.
+// implementation of vice plugin context exposed through C API in
+// vice_plugin_apicpp
 class Context :
     public HTTPServerEventHandler,
     public TaskQueueEventHandler,
@@ -19,13 +19,13 @@ class Context :
 {
 SHARED_ONLY_CLASS(Context);
 public:
-    // Returns either a successfully constructed context or an error message.
+    // Returns either successfully constructed context or error message
     static variant<shared_ptr<Context>, string> init(
         vector<pair<string, string>> options,
         string programName
     );
 
-    // Private constructor.
+    // Private constructor
     Context(CKey, CKey,
         int defaultQuality,
         SocketAddress httpListenAddr,
@@ -37,7 +37,7 @@ public:
     );
     ~Context();
 
-    // Public API functions:
+    // Public API functions - 
     void URINavigation_enable(VicePluginAPI_URINavigation_Callbacks callbacks);
     int PluginNavigationControlSupportQuery_query();
 
@@ -81,18 +81,18 @@ public:
     int startFileUpload(uint64_t window);
     void cancelFileUpload(uint64_t window);
 
-    // Returns (name, valSpec, desc, defaultValStr)-tuples.
+    // Returns (name valSpec desc defaultValStr)-tuples
     static vector<tuple<string, string, string, string>> getOptionDocs();
 
-    // HTTPServerEventHandler:
+    // HTTPServerEventHandler - 
     virtual void onHTTPServerRequest(shared_ptr<HTTPRequest> request) override;
     virtual void onHTTPServerShutdownComplete() override;
 
-    // TaskQueueEventHandler:
+    // TaskQueueEventHandler - 
     virtual void onTaskQueueNeedsRunTasks() override;
     virtual void onTaskQueueShutdownComplete() override;
 
-    // WindowManagerEventHandler;
+    // WindowManagerEventHandler - 
     virtual variant<uint64_t, string> onWindowManagerCreateWindowRequest() override;
     virtual variant<uint64_t, string> onWindowManagerCreateWindowWithURIRequest(string uri) override;
     virtual void onWindowManagerCloseWindow(uint64_t window) override;

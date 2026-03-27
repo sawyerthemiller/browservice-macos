@@ -33,12 +33,12 @@ public:
     void findNext();
     void setFindResult(bool found);
 
-    // TextFieldEventHandler:
+    // TextFieldEventHandler - 
     virtual void onTextFieldTextChanged() override;
     virtual void onTextFieldSubmitted(string text) override;
     virtual void onTextFieldEscKeyDown() override;
 
-    // MenuButtonEventHandler:
+    // MenuButtonEventHandler - 
     virtual void onMenuButtonPressed(weak_ptr<MenuButton> button) override;
     virtual void onMenuButtonEnterKeyDown() override;
     virtual void onMenuButtonEscKeyDown() override;
@@ -49,7 +49,7 @@ private:
     bool updateText_(string text);
     void find_(string text, bool forward);
 
-    // Widget:
+    // Widget - 
     virtual void widgetViewportUpdated_() override;
     virtual void widgetRender_() override;
     virtual vector<shared_ptr<Widget>> widgetListChildren_() override;

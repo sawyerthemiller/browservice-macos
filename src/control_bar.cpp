@@ -1274,7 +1274,7 @@ void ControlBar::widgetRender_() {
     // Background
     viewport.fill(1, layout.width - 1, 1, Height - 4, 192);
 
-    // "Address" text
+    // Address text
     addrText_->render(
         viewport.subRect(layout.addrTextStart, layout.addrTextEnd, 1, Height - 4),
         3, -4
@@ -1312,7 +1312,7 @@ void ControlBar::widgetRender_() {
         viewport.fill(layout.separator3Pos, layout.separator3Pos + 1, 1, Height - 4, 255);
     }
 
-    // "Quality" text
+    // Quality text
     if(qualitySelector_) {
         qualityText_->render(
             viewport.subRect(
@@ -1323,7 +1323,7 @@ void ControlBar::widgetRender_() {
         );
     }
 
-    // "Find" text
+    // Find text
     if(findBarVisible_) {
         findText_->render(
             viewport.subRect(layout.findTextStart, layout.findTextEnd, 1, Height - 4),

@@ -42,7 +42,7 @@ for SUFFIX in "${SUFFIXES[@]}"; do
         echo "Processing $DEST_NAME..."
         cp -R "$HELPER_SRC" "$HELPER_DEST"
         
-        # Update Info.plist
+        # Update Infoplist
         /usr/libexec/PlistBuddy -c "Set :CFBundleName $DEST_NAME" "$HELPER_DEST/Contents/Info.plist"
         /usr/libexec/PlistBuddy -c "Set :CFBundleExecutable $DEST_NAME" "$HELPER_DEST/Contents/Info.plist"
         /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $BUNDLE_ID" "$HELPER_DEST/Contents/Info.plist"
@@ -53,7 +53,7 @@ for SUFFIX in "${SUFFIXES[@]}"; do
         # Rename executable
         mv "$HELPER_DEST/Contents/MacOS/$SRC_NAME" "$HELPER_DEST/Contents/MacOS/$DEST_NAME"
 
-        # Re-sign the helper app
+        # Re-sign helper app
         codesign --force --deep --sign - "$HELPER_DEST"
     else
         echo "WARNING: Helper app not found at $HELPER_SRC"
@@ -63,7 +63,7 @@ done
 echo "Copying Plugins..."
 PLUGINS_DIR="$CONTENTS_DIR/PlugIns"
 mkdir -p "$PLUGINS_DIR"
-# Check where the plugin is located
+# Check where plugin is located
 if [ -f "viceplugins/retrojsvice/retrojsvice.so" ]; then
     cp "viceplugins/retrojsvice/retrojsvice.so" "$PLUGINS_DIR/"
 elif [ -f "retrojsvice.so" ]; then

@@ -1,7 +1,7 @@
 #define DUAL_KEY_CODE(ch1, ch2, win, nat) \
     {(int)ch1, {win, nat}}, {(int)ch2, {win, nat}},
 
-// (windows key code, native key code) pairs for some keys
+// (windows key code native key code) pairs for some keys
 const map<int, pair<int, int>> keyCodes = {
     DUAL_KEY_CODE('a', 'A', 65, 38)
     DUAL_KEY_CODE('b', 'B', 66, 56)

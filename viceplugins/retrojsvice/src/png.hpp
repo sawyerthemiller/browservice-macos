@@ -33,14 +33,14 @@ public:
     PNGCompressor(size_t threadCount);
     ~PNGCompressor();
 
-    // Compress given image into PNG. The image data should be in a format where
-    // for all 0 <= y < height and 0 <= x < width, image[4 * (y * pitch + x) + c]
-    // is the value for color blue, green and red for c = 0, 1, 2, respectively.
-    // The resulting compressed PNG data can be obtained by concatenating the
-    // returned chunks.
+    // Compress given image into PNG image data should be in format where
+    // for all 0 <= y < height and 0 <= x < width image[4 * (y * pitch + x) + c]
+    // is value for color blue green and red for c = 0 1 2 respectively
+    // resulting compressed PNG data can be obtained by concatenating the
+    // returned chunks
     // 
-    // This function is not safe to call from multiple threads at the same time
-    // for the same PNGCompressor object.
+    // This function is not safe to call from multiple threads at same time
+    // for same PNGCompressor object
     std::vector<std::vector<uint8_t>> compress(
         const uint8_t* image,
         size_t width,

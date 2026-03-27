@@ -66,7 +66,7 @@ Xvfb::Xvfb(CKey) {
     tempDir_ = TempDir::create();
     xAuthPath_ = tempDir_->path() + "/.Xauthority";
 
-    // Create empty .Xauthority file
+    // Create empty Xauthority file
     ofstream fp;
     fp.open(xAuthPath_.c_str(), fp.out | fp.binary);
     fp.close();
@@ -75,7 +75,7 @@ Xvfb::Xvfb(CKey) {
     // Add dummy cookie to stop server from accepting all connections
     addCookieToXAuthFile(xAuthPath_, 0, generateCookie());
 
-    // Pipe through which Xvfb sends us the display number
+    // Pipe through which Xvfb sends us display number
     int displayFds[2];
     REQUIRE(!pipe(displayFds));
     int readDisplayFd = displayFds[0];
@@ -84,12 +84,12 @@ Xvfb::Xvfb(CKey) {
     pid_ = fork();
     REQUIRE(pid_ != -1);
     if(!pid_) {
-        // Xvfb subprocess:
+        // Xvfb subprocess - 
         REQUIRE(!close(readDisplayFd));
 
-        // Move the X server process to its own process group, as otherwise
-        // Ctrl+C sent to the parent would stop the X server before we have
-        // time to shut the parent down
+        // Move X server process to its own process group as otherwise
+        // Ctrl+C sent to parent would stop X server before we have
+        // time to shut parent down
         REQUIRE(!setpgid(0, 0));
 
         string writeDisplayFdStr = toString(writeDisplayFd);
@@ -102,11 +102,11 @@ Xvfb::Xvfb(CKey) {
             (char*)nullptr
         );
 
-        // If exec succeeded, this should not be reachable
+        // If exec succeeded this should not be reachable
         REQUIRE(false);
     }
 
-    // Parent process:
+    // Parent process - 
     REQUIRE(!close(writeDisplayFd));
 
     string displayStr;
@@ -134,7 +134,7 @@ Xvfb::Xvfb(CKey) {
     display_ = *display;
     INFO_LOG("Xvfb X server :", display_, " successfully started");
 
-    // Now that we know the display number, we can add the xauth rule we
+    // Now that we know display number we can add xauth rule we
     // actually use
     addCookieToXAuthFile(xAuthPath_, display_, generateCookie());
 

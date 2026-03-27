@@ -406,7 +406,7 @@ ViceFileUpload::ViceFileUpload(CKey,
 #ifdef _WIN32
     REQUIRE(CreateDirectoryW(linkDir_.c_str(), nullptr));
 
-    // On Windows, symbolic links require special permissions, so we just copy the file
+    // On Windows symbolic links require special permissions so we just copy file
     ifstream inFp;
     inFp.open(srcPath_, ifstream::binary);
     REQUIRE(inFp.good());
@@ -567,7 +567,7 @@ void ViceContext::start(shared_ptr<ViceContextEventHandler> eventHandler) {
     eventHandler_ = eventHandler;
     self_ = shared_from_this();
 
-    // For release builds, we simply use a raw pointer
+    // For release builds we simply use raw pointer
 #ifdef NDEBUG
     void* callbackData = (void*)this;
 #else

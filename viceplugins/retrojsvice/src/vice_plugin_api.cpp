@@ -103,7 +103,7 @@ API_FUNC_START
 API_FUNC_END
 }
 
-// Must be a wrapper for malloc() as the rest of the plugin implementation uses free() directly
+// Must be wrapper for malloc() as rest of plugin implementation uses free() directly
 API_EXPORT void* vicePluginAPI_malloc(size_t size) {
 API_FUNC_START
 
@@ -112,7 +112,7 @@ API_FUNC_START
 API_FUNC_END
 }
 
-// Must be a wrapper for free() as the rest of the plugin implementation uses malloc() directly
+// Must be wrapper for free() as rest of plugin implementation uses malloc() directly
 API_EXPORT void vicePluginAPI_free(void* ptr) {
 API_FUNC_START
 
@@ -175,7 +175,7 @@ API_FUNC_END
 }
 
 // Convenience macros for creating implementations of API functions that forward
-// their arguments to corresponding member functions of the Context
+// their arguments to corresponding member functions of Context
 #define WRAP_CTX_API(funcName, ...) \
     { \
     API_FUNC_START \

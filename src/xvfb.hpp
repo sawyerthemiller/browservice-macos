@@ -17,11 +17,11 @@ public:
     Xvfb(CKey);
     ~Xvfb();
 
-    // Setup the DISPLAY and XAUTHORITY environment variables to point to this
+    // Setup DISPLAY and XAUTHORITY environment variables to point to this
     // X server
     void setupEnv();
 
-    // Shut down the X server. Run automatically at destruction.
+    // Shut down X server Run automatically at destruction
     void shutdown();
 
 private:

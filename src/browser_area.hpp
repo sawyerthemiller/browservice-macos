@@ -15,11 +15,11 @@ public:
 
 class TextLayout;
 
-// BrowserArea is a special widget in the sense that it renders continuously
+// BrowserArea is special widget in sense that it renders continuously
 // (outside render() calls) and does not notify of updates using
-// WidgetParent::onWidgetViewDirty; instead, it calls
-// BrowserAreaEventHandler::onBrowserAreaViewDirty. This is to avoid redrawing
-// the rest of the UI every time the browser area updates.
+// WidgetParent -  - onWidgetViewDirty - instead it calls
+// BrowserAreaEventHandler -  - onBrowserAreaViewDirty This is to avoid redrawing
+// rest of UI every time browser area updates
 class BrowserArea :
     public Widget,
     public enable_shared_from_this<BrowserArea>
@@ -32,24 +32,24 @@ public:
     );
     ~BrowserArea();
 
-    // Creates a new CefRenderHandler than retains a pointer to this BrowserArea
-    // and paints the browser contents to the viewport
+    // Creates new CefRenderHandler than retains pointer to this BrowserArea
+    // and paints browser contents to viewport
     CefRefPtr<CefRenderHandler> createCefRenderHandler();
 
-    // Sets the browser that will be kept up to date about size changes of
-    // this widget. The browser can be unset by passing a null pointer.
+    // Sets browser that will be kept up to date about size changes of
+    // this widget browser can be unset by passing null pointer
     void setBrowser(CefRefPtr<CefBrowser> browser);
 
-    // Inform the browser again about focus and mouseover status. Should be
-    // called when loading a new page
+    // Inform browser again about focus and mouseover status Should be
+    // called when loading new page
     void refreshStatusEvents();
 
-    // After calling showError and before clearError, the browser area switches
-    // to a special mode in which it only shows the given error message.
+    // After calling showError and before clearError browser area switches
+    // to special mode in which it only shows given error message
     void showError(string message);
     void clearError();
 
-    // Notify the browser area that the browser has changed the cursor type.
+    // Notify browser area that browser has changed cursor type
     void setCursor(int cursor);
 
 private:

@@ -15,8 +15,8 @@ private:
 public:
     Config(CKey, Src& src);
 
-    // Returns empty pointer if reading the configuration failed or help/version
-    // was shown and the program should be terminated
+    // Returns empty pointer if reading configuration failed or help/version
+    // was shown and program should be terminated
     static shared_ptr<Config> read(int argc, const char* const* argv);
     static shared_ptr<Config> read(int argc, const wchar_t* const* argv);
 

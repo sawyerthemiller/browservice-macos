@@ -26,14 +26,14 @@ bool isLocalFileRequestURL(string url) {
     return false;
 }
 
-// Adjust zoom in steps of sixth root of 2.
+// Adjust zoom in steps of sixth root of 2
 constexpr double ZoomFactorStep = 1.122462048309373;
 
-// Allow zoom to at most factor 4.
+// Allow zoom to at most factor 4
 constexpr double MinZoomFactor = 0.25;
 constexpr double MaxZoomFactor = 4.0;
 
-// Convert zoom factor to Chromium internal logarithmic zoom level format.
+// Convert zoom factor to Chromium internal logarithmic zoom level format
 double zoomFactorToZoomLevel(double zoom) {
     if(!std::isfinite(zoom)) {
         zoom = 1.0;
@@ -42,7 +42,7 @@ double zoomFactorToZoomLevel(double zoom) {
     return std::log(zoom) / std::log(1.2);
 }
 
-// Zoom level step, limits and equality comparison epsilon in Chromium internal zoom level format.
+// Zoom level step limits and equality comparison epsilon in Chromium internal zoom level format
 const double ZoomLevelStep = zoomFactorToZoomLevel(ZoomFactorStep) - zoomFactorToZoomLevel(1.0);
 const double MinZoomLevel = zoomFactorToZoomLevel(MinZoomFactor);
 const double MaxZoomLevel = zoomFactorToZoomLevel(MaxZoomFactor);
@@ -94,7 +94,7 @@ public:
         fileSchemeBlockedPageSignKey_ = generateDataURLSignKey();
     }
 
-    // CefClient:
+    // CefClient - 
     virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override {
         return this;
     }
@@ -126,7 +126,7 @@ public:
         return this;
     }
 
-    // CefLifeSpanHandler:
+    // CefLifeSpanHandler - 
     virtual bool OnBeforePopup(
         CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefFrame> frame,
@@ -213,7 +213,7 @@ public:
         window_->updateSecurityStatus_();
 
         if(window_->state_ == Closed) {
-            // Browser close deferred from close().
+            // Browser close deferred from close()
             postTask([browser] {
                 browser->GetHost()->CloseBrowser(true);
             });
@@ -233,7 +233,7 @@ public:
         BROWSER_EVENT_HANDLER_CHECKS();
 
         if(window_->state_ == Open) {
-            // The window closed on its own (not triggered by close()).
+            // window closed on its own (not triggered by close())
             INFO_LOG(
                 "Closing window ", window_->handle_, " because ",
                 "the CEF browser is closing"
@@ -259,7 +259,7 @@ public:
         window_->eventHandler_.reset();
     }
 
-    // CefLoadHandler:
+    // CefLoadHandler - 
     virtual void OnLoadStart(
         CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefFrame> frame,
@@ -281,8 +281,7 @@ public:
                 window_->rootWidget_->browserArea()->clearError();
             }
 
-            // Make sure that the loaded page gets the correct idea about the
-            // focus and mouse over status
+            // Ensure loaded page gets correct focus and mouseover status
             window_->rootWidget_->browserArea()->refreshStatusEvents();
         }
     }
@@ -337,7 +336,7 @@ public:
         }
     }
 
-    // CefDisplayHandler:
+    // CefDisplayHandler - 
     virtual void OnAddressChange(
         CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefFrame> frame,
@@ -412,7 +411,7 @@ public:
         return true;
     }
 
-    // CefRequestHandler:
+    // CefRequestHandler - 
     virtual CefRefPtr<CefResourceRequestHandler> GetResourceRequestHandler(
         CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefFrame> frame,
@@ -469,7 +468,7 @@ public:
         return false;
     }
 
-    // CefFindHandler:
+    // CefFindHandler - 
     virtual void OnFindResult(
         CefRefPtr<CefBrowser> browser,
         int identifier,
@@ -488,7 +487,7 @@ public:
         }
     }
 
-    // CefKeyboardHandler:
+    // CefKeyboardHandler - 
     virtual bool OnPreKeyEvent(
         CefRefPtr<CefBrowser> browser,
         const CefKeyEvent& event,
@@ -505,14 +504,14 @@ public:
         ) {
             // Backspace navigation is disabled to fix issue where valid backspace presses were misinterpreted
             // window_->navigate(
-            //     (event.modifiers & EVENTFLAG_SHIFT_DOWN) ? 1 : -1
-            // );
-            // return true;
+            //     (eventmodifiers & EVENTFLAG_SHIFT_DOWN)  1  - -1
+            // ) - 
+            // return true - 
         }
         return false;
     }
 
-    // CefDialogHandler:
+    // CefDialogHandler - 
     virtual bool OnFileDialog(
         CefRefPtr<CefBrowser> browser,
         CefDialogHandler::FileDialogMode mode,
@@ -562,7 +561,7 @@ public:
         return true;
     }
 
-    // CefContextMenuHandler:
+    // CefContextMenuHandler - 
     virtual void OnBeforeContextMenu(
         CefRefPtr<CefBrowser> browser,
         CefRefPtr<CefFrame> frame,
@@ -648,8 +647,7 @@ void Window::close() {
     state_ = Closed;
     afterClose_();
 
-    // If the browser has been created, we start closing it; otherwise, we defer
-    // closing it to Client::OnAfterCreated.
+    // Close browser if created otherwise defer to Client - OnAfterCreated
     if(browser_) {
         CefRefPtr<CefBrowser> browser = browser_;
         postTask([browser] {
@@ -731,8 +729,7 @@ void Window::uploadFile(shared_ptr<ViceFileUpload> file) {
     fileUploadCallback_->Continue(paths);
     fileUploadCallback_ = nullptr;
 
-    // We retain all file uploads until the window cleanup is complete, as we
-    // cannot know how long CEF uses them.
+    // Retain uploads until window cleanup completes
     retainedUploads_.push_back(file);
 }
 
@@ -1156,7 +1153,7 @@ void Window::afterClose_() {
     }
 }
 
-// Called every 0.25s for an Open window for various checks.
+// Called every 025s for Open window for various checks
 void Window::watchdog_() {
     REQUIRE_UI_THREAD();
 
@@ -1164,13 +1161,10 @@ void Window::watchdog_() {
         return;
     }
 
-    // Make sure that security status is not incorrect for extended periods of
-    // time just in case our event handlers do not catch all the changes.
+    // Update security status periodically
     updateSecurityStatus_();
 
-    // Make sure that the zoom level is set correctly. The browser typically
-    // resets the zoom during initialization, so we need to initialize it in
-    // the watchdog and keep making sure it is set correctly just in case.
+    // Ensure zoom level is set correctly periodically
     updateZoom_();
 
     if(!watchdogTimeout_->isActive()) {

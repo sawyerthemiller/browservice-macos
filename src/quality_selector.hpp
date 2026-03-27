@@ -27,7 +27,7 @@ public:
         size_t choiceIdx
     );
 
-    // TextFieldEventHandler:
+    // TextFieldEventHandler - 
     virtual void onTextFieldSubmitted(string text) override;
     virtual void onTextFieldLostFocusAfterEdit() override;
     virtual void onTextFieldUDKeyDown(bool down) override;
@@ -45,7 +45,7 @@ private:
 
     void mouseRepeat_(int direction, bool first);
 
-    // Widget:
+    // Widget - 
     virtual void widgetViewportUpdated_() override;
     virtual void widgetRender_() override;
     virtual vector<shared_ptr<Widget>> widgetListChildren_() override;

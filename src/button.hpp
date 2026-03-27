@@ -21,7 +21,7 @@ public:
     void setText(string text);
 
 private:
-    // Widget:
+    // Widget - 
     virtual void widgetRender_() override;
     virtual void widgetMouseDownEvent_(int x, int y, int button) override;
     virtual void widgetMouseUpEvent_(int x, int y, int button) override;

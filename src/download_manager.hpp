@@ -44,8 +44,8 @@ public:
 
     void acceptPendingDownload();
 
-    // Creates a new CefDownloadHandler than passes the received downloads to
-    // this object (the returned object retains a pointer to this object)
+    // Creates new CefDownloadHandler than passes received downloads to
+    // this object (returned object retains pointer to this object)
     CefRefPtr<CefDownloadHandler> createCefDownloadHandler();
 
 private:

@@ -33,9 +33,9 @@ private:
     mt19937 rng_;
 };
 
-// Returns the bookmark ID if given url is bookmarked in the last state saved
-// using Bookmarks::save, or if no bookmarks have yet been saved, the state
-// loaded on the first call to this function. Safe to call from any thread.
+// Returns bookmark ID if given url is bookmarked in last state saved
+// using Bookmarks -  - save or if no bookmarks have yet been saved state
+// loaded on first call to this function Safe to call from any thread
 optional<uint64_t> getCachedBookmarkIDByURL(string url);
 
 string handleBookmarksRequest(CefRefPtr<CefRequest> request);

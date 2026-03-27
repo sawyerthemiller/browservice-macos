@@ -15,7 +15,7 @@ const int defaultHTTPMaxThreads = 100;
 set<string> trueValues = {"1", "yes", "true", "enable", "enabled"};
 set<string> falseValues = {"0", "no", "false", "disable", "disabled"};
 
-// Returns (true, value) or (false, error message).
+// Returns (true value) or (false error message)
 pair<bool, string> parseHTTPAuthOption(string optValue) {
     if(optValue.empty()) {
         return make_pair(true, string());

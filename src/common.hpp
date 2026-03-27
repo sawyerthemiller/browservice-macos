@@ -158,9 +158,9 @@ vector<int> sanitizeUTF8StringToCodePoints(string str);
 
 mt19937 createRNG();
 
-// Logging macros that log given message along with severity, source file and
-// line information to stderr. Message is formed by calling toString for each
-// argument and concatenating the results.
+// Logging macros that log given message along with severity source file and
+// line information to stderr Message is formed by calling toString for each
+// argument and concatenating results
 #define INFO_LOG LogWriter("INFO", __FILE__, __LINE__)
 #define WARNING_LOG LogWriter("WARNING", __FILE__, __LINE__)
 #define ERROR_LOG LogWriter("ERROR", __FILE__, __LINE__)
@@ -192,10 +192,10 @@ private:
     string location_;
 };
 
-// Panic and assertion macros for ending the program in the case of
-// irrecoverable errors. By default the program exits using abort(), but after
-// enablePanicUsingCEFFatalError has been called, the program is exited using
-// the CEF logging system, by invoking LOG(FATAL).
+// Panic and assertion macros for ending program in case of
+// irrecoverable errors By default program exits using abort() but after
+// enablePanicUsingCEFFatalError has been called program is exited using
+// CEF logging system by invoking LOG(FATAL)
 #define PANIC Panicker(__FILE__, __LINE__)
 #define REQUIRE(cond) \
     do { if(!(cond)) { PANIC("Requirement '" #cond "' failed"); } } while(false)
@@ -228,12 +228,12 @@ private:
     string location_;
 };
 
-// Should only be called after CefInitialize has been successfully run.
+// Should only be called after CefInitialize has been successfully run
 void enablePanicUsingCEFFatalError();
 
 // Boilerplate for defining classes that can only be constructed into
-// shared_ptrs using the 'create' static function and which are checked for
-// leaks at the end of the program on debug builds.
+// shared_ptrs using create static function and which are checked for
+// leaks at end of program on debug builds
 #ifdef NDEBUG
 #define SHARED_ONLY_CLASS_LEAK_CHECK(ClassName)
 #else
@@ -297,8 +297,8 @@ public:
         } \
         DISABLE_COPY_MOVE(ClassName)
 
-// Convenience functions for posting tasks to be run from the CEF UI thread
-// loop. May be called from any thread.
+// Convenience functions for posting tasks to be run from CEF UI thread
+// loop May be called from any thread
 void postTask(function<void()> func);
 
 template <typename T, typename... Args>
@@ -317,10 +317,10 @@ void postTask(weak_ptr<T> weakPtr, void (T::*func)(Args...), Args... args) {
     });
 }
 
-// The macro REQUIRE_UI_THREAD is a version of CEF_REQUIRE_UI_THREAD that is
+// macro REQUIRE_UI_THREAD is version of CEF_REQUIRE_UI_THREAD that is
 // allowed to be called in any thread unless specifically enabled by
-// setRequireUIThreadEnabled. It should be enabled only when the control is in
-// the CEF event loop.
+// setRequireUIThreadEnabled It should be enabled only when control is in
+// CEF event loop
 #ifdef NDEBUG
     inline void setRequireUIThreadEnabled(bool value) {}
     #define REQUIRE_UI_THREAD() do {} while(false)

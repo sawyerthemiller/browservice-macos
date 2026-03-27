@@ -4,8 +4,8 @@
 
 namespace browservice {
 
-// Rectangle [startX, endX) x [startY, endY). Empty rectangle is represented by
-// [0, 0) x [0, 0)
+// Rectangle [startX endX) x [startY endY) Empty rectangle is represented by
+// [0 0) x [0 0)
 struct Rect {
     int startX;
     int endX;

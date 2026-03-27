@@ -13,7 +13,7 @@ public:
     virtual void onMenuButtonPressed(weak_ptr<MenuButton> button) = 0;
 
     // Some event forwarding functions useful for FindBar (if we need
-    // more of these, we should consider implementing event bubbling)
+    // more of these we should consider implementing event bubbling)
     virtual void onMenuButtonEnterKeyDown() {}
     virtual void onMenuButtonEscKeyDown() {}
 };
@@ -35,7 +35,7 @@ public:
 private:
     void mouseMove_(int x, int y);
 
-    // Widget:
+    // Widget - 
     virtual void widgetRender_() override;
     virtual void widgetMouseDownEvent_(int x, int y, int button) override;
     virtual void widgetMouseUpEvent_(int x, int y, int button) override;

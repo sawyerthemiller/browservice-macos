@@ -33,10 +33,7 @@ public:
     virtual bool onWindowStartFileUpload(uint64_t handle) = 0;
     virtual void onWindowCancelFileUpload(uint64_t handle) = 0;
 
-    // To accept popup creation, the implementation should call the accept
-    // function once with the handle of the new window as argument before
-    // returning. The accept function returns the new window that uses the same
-    // event handler as the original window, or empty if creation fails.
+    // Accept popup creation returning new window
     virtual void onWindowCreatePopupRequest(
         uint64_t handle,
         function<shared_ptr<Window>(uint64_t)> accept
@@ -46,24 +43,7 @@ public:
 class Timeout;
 class ViceFileUpload;
 
-// Lifecycle of a Window:
-//
-// 1. Window becomes open immediately after being created using tryCreate;
-//    an open window can be interacted with using the public member functions
-//    and it may call event handlers. (It may take time for the actual browser
-//    to start, but the UI is started immediately.)
-//
-// 2. Window is closed (instantiated either externally using the close() member
-//    function or internally, signaled by a call to the onWindowClose event
-//    handler). After this, the window is closed immediately, and all
-//    interaction through the public member functions and event handlers (except
-//    for the onWindowCleanupComplete event handler) must cease. However, the
-//    window still exists and is in cleanup mode.
-//
-// 3. As the cleanup is complete (i.e. the CEF browser has been successfully
-//    closed), the onWindowCleanupComplete event handler is called. After this, 
-//    the Window drops the pointer to the event handler and the window object
-//    may be destructed
+// Lifecycle - 1 Open 2 Closed 3 CleanupComplete
 class Window :
     public WidgetParent,
     public ControlBarEventHandler,
@@ -73,7 +53,7 @@ class Window :
 {
 SHARED_ONLY_CLASS(Window);
 public:
-    // Returns empty pointer if CEF browser creation fails.
+    // Returns empty pointer if CEF browser creation fails
     static shared_ptr<Window> tryCreate(
         shared_ptr<WindowEventHandler> eventHandler,
         CefRefPtr<CefRequestContext> requestContext,
@@ -82,10 +62,10 @@ public:
         bool showSoftNavigationButtons
     );
 
-    // Private constructor.
+    // Private constructor
     Window(CKey, CKey);
 
-    // Before destruction, ensure that the cleanup is complete.
+    // Before destruction ensure that cleanup is complete
     ~Window();
 
     void close();
@@ -94,7 +74,7 @@ public:
 
     string fetchTitle();
 
-    // -1 = back, 0 = refresh, 1 = forward.
+    // -1 = back 0 = refresh 1 = forward
     void navigate(int direction);
 
     void navigateToURI(string uri);
@@ -102,8 +82,7 @@ public:
     void uploadFile(shared_ptr<ViceFileUpload> file);
     void cancelFileUpload();
 
-    // Functions for passing input events to the Window. The functions accept
-    // all combinations of argument values (the values are sanitized).
+    // Pass and sanitize input events
     void sendMouseDownEvent(int x, int y, int button);
     void sendMouseUpEvent(int x, int y, int button);
     void sendMouseMoveEvent(int x, int y);
@@ -118,12 +97,12 @@ public:
     void zoomOut();
     void zoomReset();
 
-    // WidgetParent:
+    // WidgetParent - 
     virtual void onWidgetViewDirty() override;
     virtual void onWidgetCursorChanged() override;
     virtual void onGlobalHotkeyPressed(GlobalHotkey key) override;
 
-    // ControlBarEventHandler:
+    // ControlBarEventHandler - 
     virtual void onAddressSubmitted(string url) override;
     virtual void onQualityChanged(size_t idx) override;
     virtual void onPendingDownloadAccepted() override;
@@ -134,10 +113,10 @@ public:
     virtual void onNavigationButtonPressed(int direction) override;
     virtual void onHomeButtonPressed() override;
 
-    // BrowserAreaEventHandler:
+    // BrowserAreaEventHandler - 
     virtual void onBrowserAreaViewDirty() override;
 
-    // DownloadManagerEventHandler:
+    // DownloadManagerEventHandler - 
     virtual void onPendingDownloadCountChanged(int count) override;
     virtual void onDownloadProgressChanged(vector<int> progress) override;
     virtual void onDownloadCompleted(
@@ -145,18 +124,10 @@ public:
     ) override;
 
 private:
-    // Class that implements CefClient interfaces for the window.
+    // Class that implements CefClient interfaces for window
     class Client;
 
-    // To create a window:
-    //   - Create the object using the private constructor.
-    //   - Call init_().
-    //   - Create a CEF browser using a Client object pointed to the window as
-    //     the CefClient.
-    //       - If creating the browser succeeded, call createSuccessful_();
-    //         after this, the window is open.
-    //       - If creating the browser failed, call createFailed_() and let the
-    //         object destruct.
+    // To create a window - tryCreate init_ create CEF browser
     void init_(shared_ptr<WindowEventHandler> eventHandler, CefRefPtr<CefRequestContext> requestContext, uint64_t handle, bool showSoftNavigationButtons);
     void createSuccessful_();
     void createFailed_();
@@ -169,16 +140,16 @@ private:
 
     void clampMouseCoords_(int& x, int& y);
 
-    // May call onWindowViewImageChanged immediately.
+    // May call onWindowViewImageChanged immediately
     void signalImageChanged_();
 
-    // May call onWindowTitleChanged immediately.
+    // May call onWindowTitleChanged immediately
     void signalTitleChanged_();
 
     uint64_t handle_;
     enum {Open, Closed, CleanupComplete} state_;
 
-    // Empty only in CleanupComplete state.
+    // Empty only in CleanupComplete state
     shared_ptr<WindowEventHandler> eventHandler_;
 
     CefRefPtr<CefRequestContext> requestContext_;
@@ -190,8 +161,7 @@ private:
     bool titleChanged_;
     string title_;
 
-    // Always empty in CleanupComplete state. May be empty in Open and Closed
-    // states if the browser has not yet started.
+    // Empty only in CleanupComplete state
     CefRefPtr<CefBrowser> browser_;
 
     ImageSlice rootViewport_;
@@ -201,7 +171,7 @@ private:
 
     shared_ptr<Timeout> watchdogTimeout_;
 
-    // The window is in file upload mode when fileUploadCallback_ is nonempty.
+    // window is in file upload mode when fileUploadCallback_ is nonempty
     CefRefPtr<CefFileDialogCallback> fileUploadCallback_;
     vector<shared_ptr<ViceFileUpload>> retainedUploads_;
 

@@ -25,7 +25,7 @@ public:
     virtual void onClipboardButtonPressed() = 0;
     virtual void onOpenBookmarksButtonPressed() = 0;
 
-    // -1 = back, 0 = refresh, 1 = forward.
+    // -1 = back 0 = refresh 1 = forward
     virtual void onNavigationButtonPressed(int direction) = 0;
     virtual void onHomeButtonPressed() = 0;
 };
@@ -69,19 +69,19 @@ public:
 
     void activateAddress();
 
-    // TextFieldEventHandler:
+    // TextFieldEventHandler - 
     virtual void onTextFieldSubmitted(string text) override;
 
-    // MenuButtonEventHandler:
+    // MenuButtonEventHandler - 
     virtual void onMenuButtonPressed(weak_ptr<MenuButton> button) override;
 
-    // QualitySelectorEventHandler:
+    // QualitySelectorEventHandler - 
     virtual void onQualityChanged(size_t idx) override;
 
-    // ButtonEventHandler:
+    // ButtonEventHandler - 
     virtual void onButtonPressed() override;
 
-    // FindBarEventHandler:
+    // FindBarEventHandler - 
     virtual void onFindBarClose() override;
     virtual void onFind(string text, bool forward, bool findNext) override;
     virtual void onStopFind(bool clearSelection) override;
@@ -96,7 +96,7 @@ private:
 
     void setBookmarkID_(optional<uint64_t> bookmarkID);
 
-    // Widget:
+    // Widget - 
     virtual void widgetViewportUpdated_() override;
     virtual void widgetRender_() override;
     virtual vector<shared_ptr<Widget>> widgetListChildren_() override;

@@ -372,9 +372,9 @@ void Window::putFileDownload(shared_ptr<FileDownload> file) {
         }
 
         self->addIframe_(mce, [self, file](shared_ptr<HTTPRequest> request) {
-            // Some browsers use multiple requests to download a file. Thus, we
-            // add the file to downloads_ to be kept a certain period of time,
-            // and forward the client to the actual download page.
+            // Some browsers use multiple requests to download file Thus we
+            // add file to downloads_ to be kept certain period of time
+            // and forward client to actual download page
             uint64_t downloadIdx = ++self->curDownloadIdx_;
 
             shared_ptr<DelayedTaskTag> tag = postDelayedTask(
@@ -599,8 +599,8 @@ bool Window::handleTokenizedEvent_(MCE,
     }
 
     if(inFileUploadMode_) {
-        // All the events after this are such that we can safely ignore them in
-        // file upload mode.
+        // All events after this are such that we can safely ignore them in
+        // file upload mode
         return true;
     }
 
@@ -747,7 +747,7 @@ void Window::handleEvents_(MCE, uint64_t startIdx, string eventStr) {
 void Window::navigate_(MCE, int direction) {
     REQUIRE(direction >= -1 && direction <= 1);
 
-    // If two navigation operations are too close together, they probably are
+    // If two navigation operations are too close together they probably are
     // double-reported
     if(duration_cast<milliseconds>(
         steady_clock::now() - lastNavigateOperationTime_
@@ -769,8 +769,8 @@ void Window::handleMainPageRequest_(MCE, shared_ptr<HTTPRequest> request) {
         ++curMainIdx_;
 
         if(curMainIdx_ > 1 && !navigationInProgress_) {
-            // This is not first main page load and no prev/next clicked,
-            // so this must be a refresh
+            // This is not first main page load and no prev/next clicked
+            // so this must be refresh
             navigate_(mce, 0);
         }
         navigationInProgress_ = false;
@@ -953,7 +953,7 @@ void Window::handleCloseRequest_(
     if(mainIdx != curMainIdx_) {
         request->sendTextResponse(400, "ERROR: Outdated request");
     } else {
-        // Close requested, increment mainIdx to invalidate requests to the
+        // Close requested increment mainIdx to invalidate requests to the
         // current main and set shortened inactivity timer as this may be a
         // reload
         ++curMainIdx_;

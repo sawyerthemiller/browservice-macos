@@ -4,10 +4,10 @@
 
 namespace browservice {
 
-// Reference to a rectangular part of a shared image buffer
+// Reference to rectangular part of shared image buffer
 class ImageSlice {
 public:
-    // Create an empty image slice
+    // Create empty image slice
     ImageSlice()
         : buf_(nullptr),
           width_(0),
@@ -17,22 +17,18 @@ public:
           globalY_(0)
     {}
 
-    // Create a new independent width x height image buffer with background
-    // color (r, g, b)
+    // Create new independent width x height image buffer with background
+    // color (r g b)
     static ImageSlice createImage(int width, int height, uint8_t r, uint8_t g, uint8_t b);
     static ImageSlice createImage(int width, int height, uint8_t rgb = 255);
 
-    // Create new buffer with contents given by strings. In rows, each element
-    // contains the pixels of each row as characters. The colors mapping
-    // describes which color each character represents (given as RGB triplet).
+    // Create new buffer from string rows and color mapping
     static ImageSlice createImageFromStrings(
         const vector<string>& rows,
         const map<char, array<uint8_t, 3>>& colors
     );
 
-    // Returns pointer buf such that for all 0 <= y < height() and
-    // 0 <= x < width(), buf[4 * (y * pitch() + x) + c] is the value in pixel
-    // (x, y) for color blue, green and red for c = 0, 1, 2, respectively
+    // Returns pixel buffer pointer
     uint8_t* buf() { return buf_; }
 
     int width() { return width_; }
@@ -40,7 +36,7 @@ public:
 
     int pitch() { return pitch_; }
 
-    // Coordinates of the upper left corner of this slice in the original shared
+    // Coordinates of upper left corner of this slice in original shared
     // image buffer
     int globalX() { return globalX_; }
     int globalY() { return globalY_; }
@@ -51,19 +47,19 @@ public:
         return x >= 0 && y >= 0 && x < width_ && y < height_;
     }
 
-    // Returns true if the slice is empty, i.e. contains 0 pixels
+    // Returns true if slice is empty ie contains 0 pixels
     bool isEmpty() {
         return width_ == 0 || height_ == 0;
     }
 
-    // Get pointer to given pixel. Does no bounds checking; can be used with
+    // Get pointer to given pixel Does no bounds checking - can be used with
     // x = width to obtain past-the-end-of-line pointer
     uint8_t* getPixelPtr(int x, int y) {
         return &buf_[4 * (y * pitch_ + x)];
     }
 
-    // Set pixel in slice to given RGB value. If the point (x, y) is outside
-    // the slice, does nothing
+    // Set pixel in slice to given RGB value If point (x y) is outside
+    // slice does nothing
     void setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
         if(x >= 0 && x < width_ && y >= 0 && y < height_) {
             uint8_t* pos = getPixelPtr(x, y);
@@ -76,9 +72,7 @@ public:
         setPixel(x, y, rgb, rgb, rgb);
     }
 
-    // Copy the contents of src to this image slice such that its top left
-    // corner is copied to (offsetX, offsetY). If src overflows this image
-    // slice, the overflowing part is discarded.
+    // Copy src to image slice at offset
     void putImage(ImageSlice src, int x, int y) {
         Rect rect = Rect::intersection(
             Rect(0, src.width_, 0, src.height_),
@@ -94,9 +88,7 @@ public:
         }
     }
 
-    // Get image slice for subrectangle [startX, endX) x [startY, endY] of this
-    // slice. Clamps the given coordinates such that they are inside the slice
-    // and in correct order.
+    // Get clamped subrectangle slice
     ImageSlice subRect(int startX, int endX, int startY, int endY) {
         clampBoundX_(startX);
         clampBoundX_(endX);
@@ -114,8 +106,7 @@ public:
         return ret;
     }
 
-    // Return the image slice split into two parts by X or Y coordinate. Clamps
-    // the given coordinate into the valid range [0, width()] or [0, height()].
+    // Split slice by clamped coordinate
     pair<ImageSlice, ImageSlice> splitX(int x) {
         return {
             subRect(0, x, 0, height_),
@@ -129,9 +120,7 @@ public:
         };
     }
 
-    // Fill subrectangle [startX, endX) x [startY, endY] with given color
-    /// (r, g, b). Clamps the given coordinates such that they are inside the
-    // slice and in correct order.
+    // Fill clamped subrectangle with color
     void fill(
         int startX, int endX, int startY, int endY,
         uint8_t r, uint8_t g, uint8_t b
@@ -168,10 +157,7 @@ public:
         }
     }
 
-    // Create an a copy of the contents of the slice as a new independent image
-    // buffer (globalX() and globalY() are reset to zero). It is safe to move
-    // the resulting slice to another thread and modify it there independently
-    // of the modifications to the current slice in the current thread.
+    // Clone slice to new independent buffer
     ImageSlice clone() {
         ImageSlice ret;
 

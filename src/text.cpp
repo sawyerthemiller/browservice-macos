@@ -4,7 +4,7 @@
 #include "rect.hpp"
 
 #ifdef _WIN32
-// Silence warning about glib using forceinline not available in pre-C++20.
+// Silence warning about glib using forceinline not available in pre-C++20
 #pragma warning( push )
 #pragma warning( disable : 5051 )
 #endif
@@ -54,8 +54,8 @@ int jumpUTF8Chars(const string& str, int idx, int count) {
     return idx;
 }
 
-// FreeType2 TrueType interpreter version can only be set using an environment
-// variable, so we set it temporarily using this class
+// FreeType2 TrueType interpreter version can only be set using environment
+// variable so we set it temporarily using this class
 class FreeType2SetEnv {
 public:
     FreeType2SetEnv() {
@@ -207,7 +207,7 @@ struct TextLayout::Impl {
 
         pango_layout_set_text(layout, newText.data(), (int)newText.size());
 
-        // Check that Pango agrees that the text is valid UTF-8
+        // Check that Pango agrees that text is valid UTF-8
         REQUIRE(!strcmp(pango_layout_get_text(layout), newText.c_str()));
 
         text = move(newText);

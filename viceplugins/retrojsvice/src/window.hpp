@@ -9,12 +9,12 @@ class FileUpload;
 
 class WindowEventHandler {
 public:
-    // Called when window closes itself (i.e. is not closed by a call to
-    // Window::close()). The window is immediately closed as if Window::close
-    // was called.
+    // Called when window closes itself (ie is not closed by call to
+    // Window -  - close()) window is immediately closed as if Window -  - close
+    // was called
     virtual void onWindowClose(uint64_t window) = 0;
 
-    // See ImageCompressorEventHandler::onImageCompressorFetchImage
+    // See ImageCompressorEventHandler -  - onImageCompressorFetchImage
     virtual void onWindowFetchImage(
         uint64_t window,
         function<void(const uint8_t*, size_t, size_t, size_t)> func
@@ -51,8 +51,8 @@ class FileDownload;
 class HTTPRequest;
 class SecretGenerator;
 
-// Must be closed before destruction (as signaled by the onWindowClose, caused
-// by the Window itself or initiated using Window::close)
+// Must be closed before destruction (as signaled by onWindowClose caused
+// by Window itself or initiated using Window -  - close)
 class Window :
     public ImageCompressorEventHandler,
     public enable_shared_from_this<Window>
@@ -70,9 +70,9 @@ public:
     );
     ~Window();
 
-    // Immediately closes the window (no more event handlers will be called and
-    // no member functions may be called for this window). Does not call
-    // WindowEventHandler::onWindowClose.
+    // Immediately closes window (no more event handlers will be called and
+    // no member functions may be called for this window) Does not call
+    // WindowEventHandler -  - onWindowClose
     void close();
 
     void handleInitialForwardHTTPRequest(shared_ptr<HTTPRequest> request);
@@ -94,7 +94,7 @@ public:
     bool startFileUpload();
     void cancelFileUpload();
 
-    // ImageCompressorEventHandler:
+    // ImageCompressorEventHandler - 
     virtual void onImageCompressorFetchImage(
         function<void(const uint8_t*, size_t, size_t, size_t)> func
     ) override;
@@ -105,7 +105,7 @@ public:
 private:
     void afterConstruct_(shared_ptr<Window> self);
 
-    // Closes window and calls WindowEventHandler::onWindowClose.
+    // Closes window and calls WindowEventHandler -  - onWindowClose
     void selfClose_(MCE);
 
     void updateInactivityTimeout_(bool shorten = false);
@@ -162,14 +162,14 @@ private:
     bool setupNavigationForwarding_;
     shared_ptr<SecretGenerator> secretGen_;
 
-    // The key codes sent by the client are XOR "encrypted" using this key. Note
-    // that THIS DOES NOT PROVIDE SECURITY from sniffers, because the key is
-    // sent in plain text in the HTML. The only point of this is to reduce the
-    // likelihood that a password being typed is revealed from the URL in the
-    // status bar of the browser for example in screen capture videos. Even this
-    // does not always work due to the inherent and grave vulnerability of the
-    // non-OTP XOR encryption. Thus you should NEVER rely on this providing any
-    // kind of security.
+    // key codes sent by client are XOR encrypted using this key Note
+    // that THIS DOES NOT PROVIDE SECURITY from sniffers because key is
+    // sent in plain text in HTML only point of this is to reduce the
+    // likelihood that password being typed is revealed from URL in the
+    // status bar of browser for example in screen capture videos Even this
+    // does not always work due to inherent and grave vulnerability of the
+    // non-OTP XOR encryption Thus you should NEVER rely on this providing any
+    // kind of security
     vector<int> snakeOilKeyCipherKey_;
 
     shared_ptr<WindowEventHandler> eventHandler_;
@@ -192,22 +192,22 @@ private:
     bool preMainVisited_;
     bool navigationInProgress_;
 
-    // How many times the main page has been requested. The main page mentions
-    // its index to all the requests it makes, and we discard all the requests
-    // that are not from the newest main page.
+    // How many times main page has been requested main page mentions
+    // its index to all requests it makes and we discard all requests
+    // that are not from newest main page
     uint64_t curMainIdx_;
 
-    // Latest image index. We discard image requests that do not have a higher
-    // image index to avoid request reordering.
+    // Latest image index We discard image requests that do not have higher
+    // image index to avoid request reordering
     uint64_t curImgIdx_;
 
-    // How many events we have handled for the current main index. We keep track
-    // of this to avoid replaying events; the client may send the same events
-    // twice as it cannot know for sure which requests make it through.
+    // How many events we have handled for current main index We keep track
+    // of this to avoid replaying events - client may send same events
+    // twice as it cannot know for sure which requests make it through
     uint64_t curEventIdx_;
 
-    // Downloads whose iframe has been loaded; the actual file is kept available
-    // until a timeout has expired.
+    // Downloads whose iframe has been loaded - actual file is kept available
+    // until timeout has expired
     map<
         uint64_t,
         pair<shared_ptr<FileDownload>, shared_ptr<DelayedTaskTag>>

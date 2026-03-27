@@ -10,9 +10,9 @@ public:
     virtual void onServerShutdownComplete() = 0;
 };
 
-// The root object for the whole browser proxy server, handling multiple
-// browser windows. Before quitting CEF message loop, call shutdown and wait
-// for onServerShutdownComplete event.
+// root object for whole browser proxy server handling multiple
+// browser windows Before quitting CEF message loop call shutdown and wait
+// for onServerShutdownComplete event
 class Server :
     public ViceContextEventHandler,
     public WindowEventHandler,
@@ -26,10 +26,10 @@ public:
         CefRefPtr<CefRequestContext> requestContext
     );
 
-    // Shutdown the server if it is not already shut down
+    // Shutdown server if it is not already shut down
     void shutdown();
 
-    // ViceContextEventHandler:
+    // ViceContextEventHandler - 
     virtual uint64_t onViceContextCreateWindowRequest(string& reason, optional<string> uri) override;
     virtual void onViceContextCloseWindow(uint64_t window) override;
     virtual void onViceContextResizeWindow(
@@ -70,7 +70,7 @@ public:
     virtual void onViceContextZoomReset(uint64_t window) override;
     virtual void onViceContextShutdownComplete() override;
 
-    // WindowEventHandler:
+    // WindowEventHandler - 
     virtual void onWindowClose(uint64_t handle) override;
     virtual void onWindowCleanupComplete(uint64_t handle) override;
     virtual void onWindowViewImageChanged(uint64_t handle) override;

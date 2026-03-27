@@ -161,9 +161,9 @@ bool isNonEmptyNumericStr(const string& str);
 template<class... T> struct Overloaded : T... { using T::operator()...; };
 template<class... T> Overloaded(T...) -> Overloaded<T...>;
 
-// Logging macros that log given message along with log level, source file and
-// line information to stderr. Message is formed by calling toString for each
-// argument and concatenating the results.
+// Logging macros that log given message along with log level source file and
+// line information to stderr Message is formed by calling toString for each
+// argument and concatenating results
 #define INFO_LOG LogWriter(LogLevel::Info, __FILE__, __LINE__)
 #define WARNING_LOG LogWriter(LogLevel::Warning, __FILE__, __LINE__)
 #define ERROR_LOG LogWriter(LogLevel::Error, __FILE__, __LINE__)
@@ -201,8 +201,8 @@ private:
     string location_;
 };
 
-// Panic and assertion macros for ending the program in the case of
-// irrecoverable errors.
+// Panic and assertion macros for ending program in case of
+// irrecoverable errors
 #define PANIC Panicker(__FILE__, __LINE__)
 #define REQUIRE(cond) \
     do { if(!(cond)) { PANIC("Requirement '" #cond "' failed"); } } while(false)
@@ -235,14 +235,14 @@ private:
     string location_;
 };
 
-// Set logging and panicking backends. Pass empty function to revert to default
-// behavior.
+// Set logging and panicking backends Pass empty function to revert to default
+// behavior
 void setLogCallback(function<void(LogLevel, const char*, const char*)> callback);
 void setPanicCallback(function<void(const char*, const char*)> callback);
 
 // Boilerplate for defining classes that can only be constructed into
-// shared_ptrs using the 'create' static function and which are checked for
-// leaks at the end of the program on debug builds.
+// shared_ptrs using create static function and which are checked for
+// leaks at end of program on debug builds
 #ifdef NDEBUG
 #define SHARED_ONLY_CLASS_LEAK_CHECK(ClassName)
 #else
@@ -311,17 +311,17 @@ public:
 
 char* createMallocString(string val);
 
-// We call the thread currently executing a plugin API call related to a context
-// the "API thread". While it is not necessarily always the same thread, the
-// plugin API guarantees that at most one API call for the same context is
-// running at a time.
+// We call thread currently executing plugin API call related to context
+// API thread While it is not necessarily always same thread the
+// plugin API guarantees that at most one API call for same context is
+// running at time
 //
-// Most of the plugin logic runs in the API thread (only blocking and CPU
-// intensive parts are offloaded to background threads); threads can post tasks
-// to be run in the API thread using postTask in task_queue.hpp.
+// Most of plugin logic runs in API thread (only blocking and CPU
+// intensive parts are offloaded to background threads) - threads can post tasks
+// to be run in API thread using postTask in task_queuehpp
 //
-// The macro REQUIRE_API_THREAD checks that the code is running in the API
-// thread.
+// macro REQUIRE_API_THREAD checks that code is running in API
+// thread
 #define REQUIRE_API_THREAD() \
     do { \
         if(!inAPIThread_) { \
@@ -330,16 +330,16 @@ char* createMallocString(string val);
     } while(false)
 
 // This value should only be modified by Context (set to true when entering a
-// plugin API function and to false when exiting the function).
+// plugin API function and to false when exiting function)
 extern thread_local bool inAPIThread_;
 
 // Marker object used as first argument in class member functions to annotate
-// that the function May Call Event handlers registered to the class directly.
-// This makes sure that the caller is aware of this possibility, because the
-// caller has to specify the argument explicitly. In addition, adding this
-// argument retroactively to a function will ensure that the API compatibility
-// breaks, ensuring that all the places where the function is called from are
-// checked.
+// that function May Call Event handlers registered to class directly
+// This makes sure that caller is aware of this possibility because the
+// caller has to specify argument explicitly In addition adding this
+// argument retroactively to function will ensure that API compatibility
+// breaks ensuring that all places where function is called from are
+// checked
 struct MCE {};
 extern MCE mce;
 

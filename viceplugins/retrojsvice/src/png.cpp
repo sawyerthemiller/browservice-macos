@@ -196,7 +196,7 @@ Result runJob(JobData jobData) {
                 imagePos += 4;
             }
         } else {
-            // The rest of the lines are filtered using Paeth
+            // rest of lines are filtered using Paeth
             const uint8_t* upImagePos = imagePos - 4 * pitch;
             rawData.push_back(4);
             int leftVal[3] = {0, 0, 0};
@@ -279,7 +279,7 @@ Result runJob(JobData jobData) {
     int res = deflateEnd(&zStream);
     CHECK(res == Z_OK || res == Z_DATA_ERROR);
 
-    // Remove Adler32 value from the end of data
+    // Remove Adler32 value from end of data
     if(endStream) {
         CHECK(chunk.size() >= 4);
         chunk.resize(chunk.size() - 4);
@@ -408,8 +408,8 @@ std::vector<std::vector<uint8_t>> PNGCompressor::Impl::compress(
         ChunkWriter writer(headerData, "IDAT");
 
         // ZLIB header
-        writer.writeU8(8 | (7 << 4)); // compression method deflate, 32K window size
-        writer.writeU8(1); // no preset dictionary, check bits 1
+        writer.writeU8(8 | (7 << 4)); // compression method deflate 32K window size
+        writer.writeU8(1); // no preset dictionary check bits 1
 
         writer.finish();
     }
@@ -423,7 +423,7 @@ std::vector<std::vector<uint8_t>> PNGCompressor::Impl::compress(
     {
         ChunkWriter writer(footerData, "IDAT");
 
-        // Combined adler32 value terminates the ZLIB stream
+        // Combined adler32 value terminates ZLIB stream
         uint32_t adler32 = 1;
         for(const Result& result : results) {
             adler32 = adler32_combine(adler32, result.adler32, (long)result.uncompressedBytes);

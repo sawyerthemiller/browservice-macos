@@ -1,6 +1,6 @@
 #include "browser_font_render_mode.hpp"
 
-// Accessor functions defined in patched CEF.
+// Accessor functions defined in patched CEF
 extern "C" void cef_chromiumBrowserviceFontRenderParamsSetAntialiasingEnabled(int enabled);
 extern "C" void cef_chromiumBrowserviceFontRenderParamsSetSubpixelPositioningEnabled(int enabled);
 extern "C" void cef_chromiumBrowserviceFontRenderParamsSetAutohinterEnabled(int enabled);

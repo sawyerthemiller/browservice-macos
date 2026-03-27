@@ -2,7 +2,7 @@
 
 set -e
 
-# Using a slightly older stable version
+# Using slightly older stable version
 CEF_VERSION="140.1.15+gfaef09b+chromium-140.0.7339.214"
 
 CEF_PLATFORM="macosarm64"
@@ -37,11 +37,11 @@ if ! grep -q "libcef_loader_impl.cc" "${CEF_DIR}/libcef_dll/CMakeLists.txt"; the
 ' "${CEF_DIR}/libcef_dll/CMakeLists.txt"
 fi
 
-# Create directory if it doesn't exist
+# Create directory if it doesnt exist
 if [ ! -f "${CEF_DIR}/libcef_dll/wrapper/libcef_loader_impl.cc" ]; then
     echo "Creating libcef_loader_impl.cc..."
     cat > "${CEF_DIR}/libcef_dll/wrapper/libcef_loader_impl.cc" <<EOF
-#include "include/wrapper/cef_library_loader.h"
+#include include/wrapper/cef_library_loaderh
 
 int cef_load_library(const char* path) {
   return 1;

@@ -130,7 +130,7 @@ public:
         CefRefPtr<CefCommandLine> commandLine,
         const CefString& currentDirectory
     ) override {
-        // Prevent default action.
+        // Prevent default action
         return true;
     }
 
@@ -268,7 +268,7 @@ int main(int argc, char* argv[]) {
         settings.command_line_args_disabled = true;
 
 #ifdef __APPLE__
-        // Helper app usage is handled by the bundle structure
+        // Helper app usage is handled by bundle structure
 #endif
 
         CefString(&settings.user_agent).FromString(globals->config->userAgent);
@@ -280,7 +280,7 @@ int main(int argc, char* argv[]) {
         requestContextSettings.cookieable_schemes_exclude_defaults = settings.cookieable_schemes_exclude_defaults;
 
         if(globals->config->dataDir.empty()) {
-            // Incognito mode.
+            // Incognito mode
             PathStr rootCachePath = globals->dotDirPath + PathSep + PATHSTR("cef");
 #ifdef _WIN32
             CefString(&settings.root_cache_path).FromWString(rootCachePath);
@@ -291,7 +291,7 @@ int main(int argc, char* argv[]) {
 #endif
             CefString(&requestContextSettings.cache_path).clear();
         } else {
-            // Data dir specified by user.
+            // Data dir specified by user
             CefString(&settings.root_cache_path).FromString(globals->config->dataDir);
             CefString(&settings.cache_path).FromString(globals->config->dataDir);
             CefString(&requestContextSettings.cache_path).FromString(globals->config->dataDir);
@@ -315,7 +315,7 @@ int main(int argc, char* argv[]) {
         enablePanicUsingCEFFatalError();
 
         // Re-register termination handlers as CEF initialization may have
-        // interfered with the previous registrations
+        // interfered with previous registrations
         registerTermSignalHandler();
 
         CefPostTask(TID_UI, base::BindOnce(pollTermSignal));

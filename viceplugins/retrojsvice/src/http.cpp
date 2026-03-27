@@ -18,8 +18,8 @@ namespace retrojsvice {
 
 namespace {
 
-// We use a AliveToken to track that all the relevant Poco HTTP server
-// background threads actually shut down before reporting successful shutdown.
+// We use AliveToken to track that all relevant Poco HTTP server
+// background threads actually shut down before reporting successful shutdown
 class AliveToken {
 public:
     static AliveToken create() {
@@ -51,7 +51,7 @@ private:
 
 class HTTPRequest::Impl {
 public:
-    // May throw Poco::Exception.
+    // May throw Poco -  - Exception
     Impl(
         Poco::Net::HTTPServerRequest& request,
         unique_ptr<Poco::Net::HTMLForm> form,
@@ -244,7 +244,7 @@ public:
 private:
     AliveToken aliveToken_;
 
-    // nullptr after the response has been sent.
+    // nullptr after response has been sent
     Poco::Net::HTTPServerRequest* request_;
 
     string method_;
@@ -507,7 +507,7 @@ ostream& operator<<(ostream& out, SocketAddress addr) {
 class HTTPServer::Impl : public enable_shared_from_this<Impl> {
 SHARED_ONLY_CLASS(Impl);
 public:
-    // May throw Poco::Exception if startup fails.
+    // May throw Poco -  - Exception if startup fails
     Impl(CKey,
         weak_ptr<HTTPServerEventHandler> eventHandler,
         SocketAddress listenAddr,
@@ -568,10 +568,10 @@ public:
                 );
             }
 
-            // Just to be safe, use our alive token to wait for possibly
+            // Just to be safe use our alive token to wait for possibly
             // lingering Poco HTTP server background threads to actually shut
-            // down so that we can be sure that we won't get any calls to the
-            // HTTP request handler after shutdown.
+            // down so that we can be sure that we wont get any calls to the
+            // HTTP request handler after shutdown
             AliveTokenWatcher watcher(move(self->aliveToken_));
             while(watcher.isTokenAlive()) {
                 sleep_for(milliseconds(100));

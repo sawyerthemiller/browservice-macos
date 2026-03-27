@@ -14,7 +14,7 @@ public:
     // 32 characters from [A-Za-z0-9]
     string generateCSRFToken();
 
-    // 2000..2500 integers in range 0..255
+    // 20002500 integers in range 0255
     vector<int> generateSnakeOilCipherKey();
 
 private:

@@ -4,12 +4,12 @@
 
 namespace retrojsvice {
 
-// Keys are represented by integers; positive integers are Unicode code points
-// and negative integers are Windows key codes for non-character keys.
+// Keys are represented by integers - positive integers are Unicode code points
+// and negative integers are Windows key codes for non-character keys
 bool isValidKey(int key);
 
-// String containing a comma-separated list of the negations of valid negative
-// (that is, non-character) key IDs
+// String containing comma-separated list of negations of valid negative
+// (that is non-character) key IDs
 extern const string validNonCharKeyList;
 
 namespace keys {

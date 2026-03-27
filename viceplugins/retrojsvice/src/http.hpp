@@ -10,17 +10,17 @@ namespace http_ {
     class HTTPRequestHandler;
 }
 
-// State of a single HTTP request. The response should be sent by calling one of
-// the send* functions exactly once. If no response is given, a internal server
-// error response is sent upon object destruction and a warning is logged. No
-// other member functions may be called after sending the response.
+// State of single HTTP request response should be sent by calling one of
+// send* functions exactly once If no response is given internal server
+// error response is sent upon object destruction and warning is logged No
+// other member functions may be called after sending response
 class HTTPRequest {
 SHARED_ONLY_CLASS(HTTPRequest);
 private:
     class Impl;
 
 public:
-    // Private constructor.
+    // Private constructor
     HTTPRequest(CKey, unique_ptr<Impl> impl);
 
     string method();
@@ -28,17 +28,17 @@ public:
     string userAgent();
 
     // Form accessors return empty string/pointer if there is no entry with
-    // specified name.
+    // specified name
     string getFormParam(string name);
     shared_ptr<FileUpload> getFormFile(string name);
 
     optional<string> getBasicAuthCredentials();
 
-    // The body function will be called to write the body of the response in a
-    // different thread. In case of HTTP server internal errors or server
-    // shutdown, the body function may not be called or writing to the given
-    // ostream may throw an exception. Otherwise, the given content length
-    // should match the number of bytes written.
+    // body function will be called to write body of response in a
+    // different thread In case of HTTP server internal errors or server
+    // shutdown body function may not be called or writing to given
+    // ostream may throw exception Otherwise given content length
+    // should match number of bytes written
     void sendResponse(
         int status,
         string contentType,
@@ -89,9 +89,9 @@ private:
 
 class SocketAddress {
 public:
-    // Create socket address from string representation of type "ADDRESS:PORT",
-    // such as "127.0.0.1:8080". Returns an empty optional if parsing the
-    // representation failed.
+    // Create socket address from string representation of type ADDRESS - PORT
+    // such as 127001 - 8080 Returns empty optional if parsing the
+    // representation failed
     static optional<SocketAddress> parse(string repr);
 
 private:
@@ -113,8 +113,8 @@ public:
 };
 
 // HTTP server that delegates requests to be handled by given event handler
-// through onHTTPServerRequest. Before destruction, call shutdown and wait for
-// onHTTPServerShutdownComplete event.
+// through onHTTPServerRequest Before destruction call shutdown and wait for
+// onHTTPServerShutdownComplete event
 class HTTPServer {
 SHARED_ONLY_CLASS(HTTPServer);
 public:

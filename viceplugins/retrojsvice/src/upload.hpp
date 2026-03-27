@@ -22,7 +22,7 @@ private:
     class Impl;
 
 public:
-    // Private constructor.
+    // Private constructor
     FileUpload(CKey, shared_ptr<Impl> impl);
 
     ~FileUpload();
@@ -36,8 +36,8 @@ private:
     friend class UploadStorage;
 };
 
-// Shared storage for file uploads that deduplicates files that have the same
-// content. UploadStorages and FileUploads are thread-safe.
+// Shared storage for file uploads that deduplicates files that have same
+// content UploadStorages and FileUploads are thread-safe
 class UploadStorage : public enable_shared_from_this<UploadStorage> {
 SHARED_ONLY_CLASS(UploadStorage);
 public:
@@ -45,9 +45,9 @@ public:
 
     ~UploadStorage();
 
-    // Returns the file upload object if the reading the file from dataStream
-    // succeeds (badbit is not raised and no exceptions are thrown). Otherwise,
-    // returns an empty pointer.
+    // Returns file upload object if reading file from dataStream
+    // succeeds (badbit is not raised and no exceptions are thrown) Otherwise
+    // returns empty pointer
     shared_ptr<FileUpload> upload(string name, istream& dataStream);
 
 private:

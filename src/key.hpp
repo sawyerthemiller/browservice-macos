@@ -4,8 +4,8 @@
 
 namespace browservice {
 
-// Keys are represented by integers; positive integers are Unicode code points
-// and negative integers are Windows key codes for non-character keys.
+// Keys are represented by integers - positive integers are Unicode code points
+// and negative integers are Windows key codes for non-character keys
 bool isValidKey(int key);
 
 struct UTF8Char {
@@ -13,8 +13,8 @@ struct UTF8Char {
     int length;
 };
 
-// Returns the UTF-8 representation of the character represented by given valid
-// key. If key < 0, the return value has length equal to 0.
+// Returns UTF-8 representation of character represented by given valid
+// key If key < 0 return value has length equal to 0
 UTF8Char keyToUTF8(int key);
 
 namespace keys {

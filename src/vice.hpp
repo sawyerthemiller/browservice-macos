@@ -6,19 +6,17 @@ typedef struct VicePluginAPI_Context VicePluginAPI_Context;
 
 namespace browservice {
 
-// Dynamically loaded view service (vice) plugin library that shows the browser
-// view to the user and relays back the input events. Can be interacted with
-// using a ViceContext.
+// Vice plugin library for browser view and input relay
 class VicePlugin {
 SHARED_ONLY_CLASS(VicePlugin);
 private:
     struct APIFuncs;
 
 public:
-    // Returns an empty pointer if loading the plugin failed.
+    // Returns empty pointer if loading plugin failed
     static shared_ptr<VicePlugin> load(string filename);
 
-    // Private constructor.
+    // Private constructor
     VicePlugin(CKey, CKey,
         string filename,
         void* lib,
@@ -73,11 +71,10 @@ private:
 };
 
 // Implementations of these event handlers may NOT call functions of ViceContext
-// directly.
+// directly
 class ViceContextEventHandler {
 public:
-    // To deny window creation, return 0 and optionally set msg to short
-    // human-readable reason for the denial.
+    // Return 0 to deny window creation with msg
     virtual uint64_t onViceContextCreateWindowRequest(string& msg, optional<string> uri) = 0;
 
     virtual void onViceContextCloseWindow(uint64_t window) = 0;
@@ -129,38 +126,34 @@ public:
 
 class CompletedDownload;
 
-// An initialized vice plugin context.
+// initialized vice plugin context
 class ViceContext : public enable_shared_from_this<ViceContext> {
 SHARED_ONLY_CLASS(ViceContext);
 public:
-    // Returns an empty pointer if initializing the plugin failed. The reason
-    // for the failure is written to stderr.
+    // Init plugin - returns empty and logs on failure
     static shared_ptr<ViceContext> init(
         shared_ptr<VicePlugin> plugin,
         vector<pair<string, string>> options
     );
 
-    // Private constructor.
+    // Private constructor
     ViceContext(CKey, CKey,
         shared_ptr<VicePlugin> plugin,
         VicePluginAPI_Context* handle
     );
     ~ViceContext();
 
-    // Does the plugin implement navigation controls? (Data may be unavailable if the plugin does
-    // not support the PluginNavigationControlSupportQuery plugin.)
+    // Does plugin implement navigation controls (Data may be unavailable if plugin does
+    // not support PluginNavigationControlSupportQuery plugin)
     optional<bool> hasNavigationControls();
 
-    // Start running the context. Before quitting CEF message loop, call
-    // shutdown and wait for onViceContextShutdownComplete event. Pointer to
-    // the event handler will be retained until shutdown is complete.
+    // Start context and retain event handler
     void start(shared_ptr<ViceContextEventHandler> eventHandler);
     void shutdown();
 
-    // Vice plugin API functions for running contexts:
+    // Vice plugin API functions for running contexts - 
 
-    // If the request is denied, the function returns false and sets msg to a
-    // short human-readable reason for the denial.
+    // Returns false with msg if denied
     bool requestCreatePopup(
         uint64_t parentWindow,
         uint64_t popupWindow,
@@ -206,8 +199,8 @@ private:
 
     shared_ptr<ViceContextEventHandler> eventHandler_;
 
-    // For running contexts, we store a shared pointer to self to avoid it being
-    // destructed.
+    // For running contexts we store shared pointer to self to avoid it being
+    // destructed
     shared_ptr<ViceContext> self_;
 
     void* callbackData_;

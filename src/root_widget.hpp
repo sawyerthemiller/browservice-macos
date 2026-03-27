@@ -25,7 +25,7 @@ public:
 private:
     void afterConstruct_(shared_ptr<RootWidget> self);
 
-    // Widget:
+    // Widget - 
     virtual void widgetViewportUpdated_() override;
     virtual vector<shared_ptr<Widget>> widgetListChildren_() override;
 

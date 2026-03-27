@@ -1,10 +1,10 @@
-// sha3.c
-// 19-Nov-11  Markku-Juhani O. Saarinen <mjos@iki.fi>
+// sha3c
+// 19-Nov-11  Markku-Juhani O Saarinen <mjos@ikifi>
 
-// Revised 07-Aug-15 to match with official release of FIPS PUB 202 "SHA3"
+// Revised 07-Aug-15 to match with official release of FIPS PUB 202 SHA3
 // Revised 03-Sep-15 for portability + OpenSSL - style API
 
-// Modified for use with browservice (omit unused stuff, follow strict aliasing rules)
+// Modified for use with browservice (omit unused stuff follow strict aliasing rules)
 
 #include "sha3.hpp"
 
@@ -12,7 +12,7 @@
 #error "Only little endian is supported"
 #endif
 
-// update the state with given number of rounds
+// update state with given number of rounds
 
 void sha3_keccakf(uint64_t st[25])
 {
@@ -75,7 +75,7 @@ void sha3_keccakf(uint64_t st[25])
     }
 }
 
-// Initialize the context for SHA3
+// Initialize context for SHA3
 
 int sha3_init(sha3_ctx_t *c, int mdlen)
 {
@@ -110,7 +110,7 @@ int sha3_update(sha3_ctx_t *c, const unsigned char *data, size_t len)
     return 1;
 }
 
-// finalize and output a hash
+// finalize and output hash
 
 int sha3_final(unsigned char *md, sha3_ctx_t *c)
 {
@@ -127,7 +127,7 @@ int sha3_final(unsigned char *md, sha3_ctx_t *c)
     return 1;
 }
 
-// compute a SHA-3 hash (md) of given byte length from "in"
+// compute SHA-3 hash (md) of given byte length from in
 
 void *sha3(const unsigned char *in, size_t inlen, unsigned char *md, int mdlen)
 {
