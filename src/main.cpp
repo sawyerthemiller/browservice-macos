@@ -71,7 +71,7 @@ public:
         }
     }
 
-    // CefApp (may be used with initialized_ = false in other processes):
+    // CefApp (may be used with initialized_ = false)
     virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override {
         return this;
     }
@@ -85,8 +85,6 @@ public:
 
         commandLine->AppendSwitch("disable-smooth-scrolling");
 
-        // On Linux, use ANGLE/SwiftShader by maximize compatibility. On Windows, the Chromium
-        // default should be reliable.
 #if !defined(_WIN32) && !defined(__APPLE__)
         commandLine->AppendSwitchWithValue("use-gl", "angle");
         commandLine->AppendSwitchWithValue("use-angle", "swiftshader");
@@ -107,7 +105,7 @@ public:
         );
     }
 
-    // CefBrowserProcessHandler (may be used with initialized_ = false in other processes):
+    // CefBrowserProcessHandler (may be used with initialized_ = false)
     virtual void OnContextInitialized() override {
         if(!initialized_) {
             return;
@@ -270,8 +268,7 @@ int main(int argc, char* argv[]) {
         settings.command_line_args_disabled = true;
 
 #ifdef __APPLE__
-        // Helper app usage is handled by the bundle structure.
-        // We do not need to explicitly set browser_subprocess_path if the helper is correctly placed.
+        // Helper app usage is handled by the bundle structure
 #endif
 
         CefString(&settings.user_agent).FromString(globals->config->userAgent);
