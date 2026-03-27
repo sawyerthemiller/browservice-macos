@@ -16,7 +16,7 @@ if [ -d "${CEF_DIR}" ]; then
     echo "Directory '${CEF_DIR}' already exists. Skipping download and extraction."
 else
     if [ ! -f "${CEF_TARBALL}" ]; then
-        echo "Downloading CEF ${CEF_VERSION} for ${CEF_PLATFORM}..."
+        echo "Downloading CEF for ${CEF_PLATFORM}..."
         echo "URL: ${DOWNLOAD_URL}"
         curl -L -o "${CEF_TARBALL}" "${DOWNLOAD_URL}"
     fi
