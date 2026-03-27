@@ -1,10 +1,10 @@
-## Browservice for macOS (Apple Silicon)
+## Browservice for macOS
 
-Instructions for building Browservice on macOS (M Series Chips)
+Instructions for building Browservice on macOS (ARM)
 
 ## Prerequisites
-- **macOS** on Apple Silicon (ARM64) is required.
-- **Xcode Command Line Tools**: Install via terminal:
+- **macOS** on Apple Silicon is required
+- **Xcode Command Line Tools** Installed via terminal
   ```bash
   xcode-select --install
   ```
@@ -22,36 +22,38 @@ cd browservice-macos
 ```
 
 ### 2. Download and Setup CEF
-Run the setup script to download the required Chromium Embedded Framework binaries (approx. 300MB).
+Run the setup script to download the required Chromium Embedded Framework binaries
 ```bash
 ./setup_cef_mac.sh
 ```
 
 ### 3. Build the Project
-Create a build directory and compile the project using CMake.
+Create a build directory and compile the project using CMake
 ```bash
 mkdir build
 cd build
+
 cmake -DCMAKE_BUILD_TYPE=Release ..
+
 make -j$(sysctl -n hw.logicalcpu)
 ```
 
 ### 4. Create the App Bundle
-Pack the executable and helper processes into a macOS App Bundle. Ensure you are running this from your `build` directory.
+Pack the executable and helper processes into a macOS app bundle, you need to run this from your `build` directory
 ```bash
 ../create_bundle.sh
 ```
-This will create `browservice.app` in your current directory.
+This will create `browservice.app` in the directory, to see it type `open .`
 
 ### 5. Finishing Up
-You can now move the created `browservice.app` file into your apps folder and delete the cloned folder if you'd like.
+You can now move the created `browservice.app` file into your apps folder and delete the cloned folder if you'd like
 
-## Running Browservice
-You can launch the application directly from the build folder:
+### Running Browservice
+You can launch the application directly from the build folder
 ```bash
 open browservice.app
 ```
-Or run the executable inside the bundle (useful for logs):
+Or run the executable inside the bundle
 ```bash
 ./browservice.app/Contents/MacOS/browservice
 ```
