@@ -53,8 +53,7 @@ add_executable(browservice ${SOURCES})
 target_include_directories(browservice PRIVATE src ${CEF_ROOT})
 
 # OpenSSL (if needed, or use system SSL)
-# Browservice uses Poco which might need SSL.
-# For now, let's assume we need to link against system libraries.
+# Browservice uses Poco which might need SSL
 
 # Link libraries
 target_link_libraries(browservice PRIVATE libcef_dll_wrapper)
@@ -69,13 +68,6 @@ target_link_libraries(browservice PRIVATE
 
 if(APPLE)
     # Add the Framework to the target link libraries
-    # We need to point to the actual framework directory for the -framework option to work if it's not in a standard location,
-    # OR we can treat it as a library. For CEF on macOS, we usually link the specific library inside the framework or use -F flag.
-    # However, since we are using standard CMake finds, we should use the variables provided by CEF.
-    # But as seen in previous steps, we need to ensure the framework is linked.
-    
-    # Using the path directly in target_link_libraries for the framework
-    # Linking directly to the binary inside the framework package
     target_link_libraries(browservice PRIVATE "${CEF_ROOT}/Release/Chromium Embedded Framework.framework/Chromium Embedded Framework")
     
     # Also link standard libs defined by CEF (AppKit, etc)
@@ -90,14 +82,12 @@ add_custom_command(TARGET browservice POST_BUILD
 )
 
 # Helper for creating app bundle structure (simplified for CLI tool)
-# Browservice is a CLI tool that launches CEF. On macOS, CEF needs a specific app bundle structure for the sub-processes.
-# However, for the main process, it can run as a CLI tool if properly initialized.
 
 add_subdirectory(viceplugins/retrojsvice)
 
 if(APPLE)
     # Copy retrojsvice.so to the app bundle
-    # Location: browservice.app/Contents/PlugIns/retrojsvice.so
+    # Location - browservice.app/Contents/PlugIns/retrojsvice.so
     
     add_custom_command(TARGET browservice POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory
