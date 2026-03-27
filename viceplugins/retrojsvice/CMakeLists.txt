@@ -34,9 +34,6 @@ add_library(retrojsvice SHARED ${SOURCES})
 
 # Include directories
 target_include_directories(retrojsvice PRIVATE src)
-# For html.cpp which might need to include headers associated with it, or vice-versa?
-# The python script likely generates a cpp file that might or might not include headers.
-# Let's check the python script output if needed, but for now assuming it's self contained or uses standard includes.
 
 target_link_libraries(retrojsvice PRIVATE
     Poco::Foundation Poco::Net Poco::Util Poco::JSON
@@ -47,6 +44,5 @@ target_link_libraries(retrojsvice PRIVATE
 
 # Set output name
 set_target_properties(retrojsvice PROPERTIES PREFIX "")
-set_target_properties(retrojsvice PROPERTIES SUFFIX ".so") # Force .so extension even on macOS to match expectation if hardcoded, though we can change expectation.
+set_target_properties(retrojsvice PROPERTIES SUFFIX ".so") # Force .so extension even on macOS to match expectation if hardcoded, though we can change expectation
 
-# On macOS, we want this to be a loadable module (bundle) usually, but shared lib is fine for dlopen.
