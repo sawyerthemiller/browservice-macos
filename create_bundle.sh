@@ -21,7 +21,7 @@ cp -R "Chromium Embedded Framework.framework" "$FRAMEWORKS_DIR/"
 echo "Copying Helper Apps..."
 HELPER_BASE="libcef_dll_wrapper/tests/cefsimple/Release"
 
-# List of suffixes for helpers. Empty string is the main helper.
+# List of suffixes for helpers
 SUFFIXES=("" " (Alerts)" " (GPU)" " (Plugin)" " (Renderer)")
 
 for SUFFIX in "${SUFFIXES[@]}"; do
@@ -29,10 +29,8 @@ for SUFFIX in "${SUFFIXES[@]}"; do
     DEST_NAME="browservice Helper${SUFFIX}"
     HELPER_SRC="$HELPER_BASE/$SRC_NAME.app"
     HELPER_DEST="$FRAMEWORKS_DIR/$DEST_NAME.app"
-    
-    # Sanitize suffix for Bundle ID (e.g. " (GPU)" -> ".gpu")
-    # Convert to lowercase and remove non-alphanumeric chars (except dot if needed, but simple removal works)
-    # We want org.browservice.app.helper.gpu
+
+    # Convert to lowercase and remove non-alphanumeric chars
     ID_SUFFIX=$(echo "$SUFFIX" | tr '[:upper:]' '[:lower:]' | tr -d ' ()')
     if [ -z "$ID_SUFFIX" ]; then
         BUNDLE_ID="org.browservice.app.helper"
@@ -50,7 +48,6 @@ for SUFFIX in "${SUFFIXES[@]}"; do
         /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $BUNDLE_ID" "$HELPER_DEST/Contents/Info.plist"
         
         # Fix Framework load path for Helper
-        # Point to @executable_path/../../../Chromium Embedded Framework.framework/... (in main bundle)
         install_name_tool -change "@executable_path/../Frameworks/Chromium Embedded Framework.framework/Chromium Embedded Framework" "@executable_path/../../../Chromium Embedded Framework.framework/Chromium Embedded Framework" "$HELPER_DEST/Contents/MacOS/$SRC_NAME"
 
         # Rename executable
@@ -66,7 +63,7 @@ done
 echo "Copying Plugins..."
 PLUGINS_DIR="$CONTENTS_DIR/PlugIns"
 mkdir -p "$PLUGINS_DIR"
-# Check where the plugin is located. It might be in viceplugins/retrojsvice or the current dir depending on build
+# Check where the plugin is located
 if [ -f "viceplugins/retrojsvice/retrojsvice.so" ]; then
     cp "viceplugins/retrojsvice/retrojsvice.so" "$PLUGINS_DIR/"
 elif [ -f "retrojsvice.so" ]; then
