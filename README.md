@@ -8,7 +8,7 @@ Instructions for building Browservice on macOS (ARM)
   ```bash
   xcode-select --install
   ```
-- **CMake**: Install via [Homebrew](https://brew.sh/):
+- **CMake** Installed via [Homebrew](https://brew.sh/):
   ```bash
   brew install cmake
   ```
