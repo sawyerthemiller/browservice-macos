@@ -41,7 +41,7 @@ fi
 if [ ! -f "${CEF_DIR}/libcef_dll/wrapper/libcef_loader_impl.cc" ]; then
     echo "Creating libcef_loader_impl.cc..."
     cat > "${CEF_DIR}/libcef_dll/wrapper/libcef_loader_impl.cc" <<EOF
-#include include/wrapper/cef_library_loaderh
+#include "include/wrapper/cef_library_loader.h"
 
 int cef_load_library(const char* path) {
   return 1;
