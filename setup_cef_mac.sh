@@ -21,7 +21,7 @@ else
         curl -L -o "${CEF_TARBALL}" "${DOWNLOAD_URL}"
     fi
 
-    echo "Extracting ${CEF_TARBALL}..."
+    echo "Extracting the downlaoded CEF binary..."
     mkdir -p "${CEF_DIR}"
     tar -xjf "${CEF_TARBALL}" -C "${CEF_DIR}" --strip-components=1
 fi
