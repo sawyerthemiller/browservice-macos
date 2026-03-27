@@ -2,6 +2,8 @@
 
 Instructions for building Browservice on macOS (ARM)
 
+<img src="https://i.ibb.co/fYmsdRFG/bsmac.png" alt="Browser Window" width="600">
+
 ## Prerequisites
 - **macOS** on Apple Silicon is required
 - **Xcode Command Line Tools** Installed via terminal
@@ -48,7 +50,7 @@ This will create `browservice.app` in the directory, to see it type `open .`
 ### 5. Finishing Up
 You can now move the created `browservice.app` file into your apps folder and delete the cloned folder if you'd like
 
-### Running Browservice
+### Running Browservice :)
 You can launch the application directly from the build folder
 ```bash
 open browservice.app
