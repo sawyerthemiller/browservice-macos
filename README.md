@@ -51,7 +51,7 @@ You can launch the application directly from the build folder:
 ```bash
 open browservice.app
 ```
-Or run the executable inside the bundle (useful for seeing logs):
+Or run the executable inside the bundle (useful for logs):
 ```bash
 ./browservice.app/Contents/MacOS/browservice
 ```
