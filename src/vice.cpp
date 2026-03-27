@@ -469,9 +469,7 @@ thread_local ViceContext* threadActivePumpEventsContext = nullptr;
 
 }
 
-// Convenience macro for passing callbacks to the plugin in ViceContext,
-// handling appropriate checks and resolving the callback data back to a
-// reference to the ViceContext object
+// Convenience macro 
 #define CTX_CALLBACK_WITHOUT_PUMPEVENTS_CHECK(ret, argDef, ...) \
     [](void* callbackData, auto ...args) -> ret { \
     API_CALLBACK_HANDLE_EXCEPTIONS_START \
@@ -569,10 +567,7 @@ void ViceContext::start(shared_ptr<ViceContextEventHandler> eventHandler) {
     eventHandler_ = eventHandler;
     self_ = shared_from_this();
 
-    // For release builds, we simply use a raw pointer to this object as the
-    // callback data. For debug builds, we leak a weak pointer to this object on
-    // purpose so that we can catch misbehaving plugins calling callbacks after
-    // shutdown (see function getContext_).
+    // For release builds, we simply use a raw pointer
 #ifdef NDEBUG
     void* callbackData = (void*)this;
 #else
