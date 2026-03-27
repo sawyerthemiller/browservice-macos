@@ -139,7 +139,7 @@ atomic<bool> requireUIThreadEnabled_(false);
 
 }
 
-// Compatibility fix for missing symbol in builds where DCHECK_IS_ON() doesn't match libcef_dll_wrapper
+// Compatibility fix for missing symbols
 #include "include/base/cef_ref_counted.h"
 
 namespace base {
