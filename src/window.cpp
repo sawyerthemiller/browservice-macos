@@ -12,7 +12,7 @@
 namespace browservice {
 
 namespace {
-// Only works for fully qualified and normalized URLs, such as the ones from CefRequest::GetURL.
+// Only works for fully qualified and normalized URLs
 bool isLocalFileRequestURL(string url) {
     if(url.size() >= 5) {
         string prefix = url.substr(0, 5);
