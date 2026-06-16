@@ -1,5 +1,7 @@
 ## Browservice for macOS
 
+Someone has made this even better, so instead of using this, you should use their fork [here...](https://github.com/startergo/browservice-macos)
+
 Instructions for building Browservice on macOS (ARM)
 
 <img src="https://i.ibb.co/fYmsdRFG/bsmac.png" alt="Browser Window" width="600">
